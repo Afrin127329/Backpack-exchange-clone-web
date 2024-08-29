@@ -1,7 +1,8 @@
 export interface CryptoData {
-  name: string;
+  pair: string;
   price: string;
   change: string;
+  changeType: string;
 }
 
 export interface DetailedCryptoData {
