@@ -1,5 +1,6 @@
 import { Input } from "@/packages/components/ui/input";
 import Image from "next/image";
+import { SelectDemo } from "./Select";
 import { ModeToggle } from "./themeToggleButton";
 import { Button } from "./ui/button";
 
@@ -129,11 +130,11 @@ const Navbar = () => {
               placeholder="Search......"
             />
           </div>
-          <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <ul className="flex flex-col md:items-center p-4 md:p-0 mt-4 font-medium border rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
             <li>
               <a
-                href="#"
-                className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
+                href="/"
+                className="block py-2 px-3 rounded  md:p-0 text-zinc-900 dark:text-zinc-50 dark:hover:text-zinc-400 hover:text-zinc-600"
                 aria-current="page"
               >
                 Market
@@ -141,19 +142,20 @@ const Navbar = () => {
             </li>
             <li>
               <a
-                href="#"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                href="/trade/123"
+                className="block py-2 px-3 rounded md:p-0 text-zinc-900 dark:text-zinc-50 dark:hover:text-zinc-400 hover:text-zinc-600"
               >
                 Trade
               </a>
             </li>
             <li>
-              <a
+              {/* <a
                 href="#"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                className="block py-2 px-3 rounded md:p-0 text-zinc-900 dark:text-zinc-50 dark:hover:text-zinc-400 hover:text-zinc-600"
               >
                 More
-              </a>
+              </a> */}
+              <SelectDemo />
             </li>
           </ul>
         </div>
