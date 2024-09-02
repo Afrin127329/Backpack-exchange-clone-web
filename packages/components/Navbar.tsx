@@ -1,5 +1,6 @@
 import { Input } from "@/packages/components/ui/input";
 import Image from "next/image";
+import Link from "next/link";
 import { SelectDemo } from "./Select";
 import { ModeToggle } from "./themeToggleButton";
 import { Button } from "./ui/button";
@@ -158,6 +159,14 @@ const Navbar = () => {
               <SelectDemo />
             </li>
           </ul>
+        </div>
+        <div className="order-last flex justify-between gap-2">
+          <Button variant={"red"}>
+            <Link href={"/login"}>Sign In</Link>
+          </Button>
+          <Button variant={"green"}>
+            <Link href={"/signup"}>Sign Up</Link>
+          </Button>
         </div>
       </div>
     </nav>

@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-sync-scripts */
+import Navbar from "@/packages/components/Navbar";
 import { ThemeProvider } from "@/packages/components/themeProvider";
 import "@/packages/styles/globals.css";
 import type { Metadata } from "next";
@@ -31,6 +32,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Navbar />
           {children}
         </ThemeProvider>
         <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
