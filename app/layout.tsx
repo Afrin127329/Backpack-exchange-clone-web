@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-sync-scripts */
 import { ThemeProvider } from "@/packages/components/themeProvider";
 import "@/packages/styles/globals.css";
 import type { Metadata } from "next";
@@ -17,6 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link
+          href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css"
+          rel="stylesheet"
+        />
+      </head>
       <body className={`${inter.className}`}>
         <ThemeProvider
           attribute="class"
@@ -26,6 +33,7 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
+        <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
       </body>
     </html>
   );
