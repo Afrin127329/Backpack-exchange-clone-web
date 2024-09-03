@@ -4,6 +4,8 @@ import { ThemeProvider } from "@/packages/components/themeProvider";
 import "@/packages/styles/globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,7 +35,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          {children}
+          <Suspense fallback={<Loading />}>{children}</Suspense>
         </ThemeProvider>
         <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
       </body>
