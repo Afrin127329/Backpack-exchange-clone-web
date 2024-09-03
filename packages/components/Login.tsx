@@ -23,7 +23,7 @@ export const containerClassName =
 
 export default function LoginForm() {
   return (
-    <Card className="mx-auto max-w-sm w-1/3">
+    <Card className="mx-auto max-w-sm w-full lg:w-1/3">
       <CardHeader className="flex flex-col justify-center items-center px-6 pt-6 pb-4">
         <CardDescription>
           <Image
