@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Markets = () => {
   return (
-    <div className="w-1/3 bg-white dark:bg-baseBackgroundL1 rounded-md shadow-md overflow-y-hidden">
+    <div className="w-full lg:w-1/3 bg-white dark:bg-baseBackgroundL1 rounded-md shadow-md overflow-y-hidden">
       <h1 className="dark:text-baseTextHighEmphasis pt-4 pl-4">Markets</h1>
       <div className="relative overflow-x-auto mt-3">
         <ul className="w-full !text-sm text-left rtl:text-right border dark:border-zinc-800 text-gray-500 dark:text-gray-400">
