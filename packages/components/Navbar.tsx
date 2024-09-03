@@ -131,7 +131,7 @@ const Navbar = () => {
               placeholder="Search......"
             />
           </div>
-          <ul className="flex flex-col md:items-center p-4 md:p-0 mt-4 font-medium border rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
+          <ul className="flex flex-col md:items-center p-2 md:p-0 font-medium md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
             <li>
               <a
                 href="/"
@@ -150,17 +150,19 @@ const Navbar = () => {
               </a>
             </li>
             <li>
-              {/* <a
-                href="#"
-                className="block py-2 px-3 rounded md:p-0 text-zinc-900 dark:text-zinc-50 dark:hover:text-zinc-400 hover:text-zinc-600"
-              >
-                More
-              </a> */}
               <SelectDemo />
             </li>
           </ul>
+          <div className="flex justify-between gap-2 order-last md:hidden">
+            <Button variant={"red"} className="w-1/2">
+              <Link href={"/login"}>Sign In</Link>
+            </Button>
+            <Button variant={"green"} className="w-1/2">
+              <Link href={"/signup"}>Sign Up</Link>
+            </Button>
+          </div>
         </div>
-        <div className="order-last flex justify-between gap-2">
+        <div className="md:flex justify-between gap-2 order-last hidden">
           <Button variant={"red"}>
             <Link href={"/login"}>Sign In</Link>
           </Button>
