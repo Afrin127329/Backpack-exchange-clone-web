@@ -155,19 +155,19 @@ const Navbar = () => {
             </li>
           </ul>
           <div className="flex justify-between gap-2 order-last md:hidden">
-            <Button variant={"red"} className="w-1/2">
+            <Button variant={"red"} className="w-1/2 border-0">
               <Link href={"/login"}>Sign In</Link>
             </Button>
-            <Button variant={"green"} className="w-1/2">
+            <Button variant={"green"} className="w-1/2 border-0">
               <Link href={"/signup"}>Sign Up</Link>
             </Button>
           </div>
         </div>
         <div className="md:flex justify-between gap-2 order-last hidden">
-          <Button variant={"red"}>
+          <Button variant={"red"} className="border-0">
             <Link href={"/login"}>Sign In</Link>
           </Button>
-          <Button variant={"green"}>
+          <Button variant={"green"} className="border-0">
             <Link href={"/signup"}>Sign Up</Link>
           </Button>
         </div>
