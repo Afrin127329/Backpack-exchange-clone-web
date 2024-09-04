@@ -17,11 +17,14 @@ import { EyeIcon, EyeOffIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { Progress } from "./ui/progress";
 
 export function CardsCreateAccount() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isTermsChecked, setIsTermsChecked] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordStrength, setPasswordStrength] = useState(0);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -32,6 +35,23 @@ export function CardsCreateAccount() {
   };
   const handleTermsChange = () => {
     setIsTermsChecked(!isTermsChecked);
+  };
+  const handlePasswordChange = (e: any) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    evaluatePasswordStrength(newPassword);
+  };
+
+  const evaluatePasswordStrength = (password: string) => {
+    let strength = 0;
+    if (password.length >= 8) strength += 25; // Minimum length
+    if (/[A-Z]/.test(password)) strength += 25; // Contains uppercase
+    if (/[a-z]/.test(password)) strength += 25; // Contains lowercase
+    if (/\d/.test(password)) strength += 25; // Contains numbers
+    if (/[@$!%*?&]/.test(password)) strength += 25; // Contains special characters
+
+    // Cap strength at 100%
+    setPasswordStrength(Math.min(strength, 100));
   };
   return (
     <Card className="mx-auto max-w-sm w-full lg:w-1/3 mb-6">
@@ -54,7 +74,12 @@ export function CardsCreateAccount() {
         </div>
         <div className="grid gap-2 relative">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" type={showPassword ? "text" : "password"} />
+          <Input
+            id="password"
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={handlePasswordChange}
+          />
           <button
             type="button"
             className="absolute top-[30px] right-0 pr-3 flex items-center text-sm leading-5"
@@ -66,6 +91,10 @@ export function CardsCreateAccount() {
               <EyeIcon className="w-5" />
             )}
           </button>
+          <Progress value={passwordStrength} className="mt-2" />
+          {passwordStrength < 100 && (
+            <p className="text-xs text-red-500">Password is weak</p>
+          )}
         </div>
         <div className="grid gap-2 relative">
           <Label htmlFor="confirmPassword">Confirm Password</Label>
