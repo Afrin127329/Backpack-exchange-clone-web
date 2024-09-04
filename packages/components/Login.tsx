@@ -34,7 +34,7 @@ export default function LoginForm() {
             className="rounded-full"
           />
         </CardDescription>
-        <CardTitle className="text-2xl pt-4">Sign In</CardTitle>
+        <CardTitle className="text-2xl pt-4 ">Sign In</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid gap-4">
@@ -58,7 +58,7 @@ export default function LoginForm() {
             variant="outline"
             className="w-full shadow-lg flex gap-2 items-center justify-center"
           >
-            Login with Google <Icons.google className="w-4 h-4" />
+            Continue with Google <Icons.google className="w-4 h-4" />
           </Button>
         </div>
         <div className="mt-4 text-center text-xs flex justify-between items-center">
