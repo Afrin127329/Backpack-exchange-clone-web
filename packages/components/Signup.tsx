@@ -17,7 +17,6 @@ import { EyeIcon, EyeOffIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { Progress } from "./ui/progress";
 
 export function CardsCreateAccount() {
   const [showPassword, setShowPassword] = useState(false);
@@ -44,15 +43,30 @@ export function CardsCreateAccount() {
 
   const evaluatePasswordStrength = (password: string) => {
     let strength = 0;
-    if (password.length >= 8) strength += 25; // Minimum length
-    if (/[A-Z]/.test(password)) strength += 25; // Contains uppercase
-    if (/[a-z]/.test(password)) strength += 25; // Contains lowercase
-    if (/\d/.test(password)) strength += 25; // Contains numbers
-    if (/[@$!%*?&]/.test(password)) strength += 25; // Contains special characters
+    if (password.length >= 8) strength += 25;
+    if (/[A-Z]/.test(password)) strength += 25;
+    if (/[a-z]/.test(password)) strength += 25;
+    if (/\d/.test(password)) strength += 25;
+    if (/[@$!%*?&]/.test(password)) strength += 25;
 
     // Cap strength at 100%
     setPasswordStrength(Math.min(strength, 100));
   };
+
+  const getProgressBarColor = () => {
+    if (passwordStrength <= 50) return "bg-red-500";
+    if (passwordStrength <= 75) return "bg-yellow-500";
+    return "bg-green-500";
+  };
+
+  const getPasswordStrengthText = () => {
+    if (passwordStrength <= 50) return { text: "Weak", color: "text-red-500" };
+    if (passwordStrength <= 75)
+      return { text: "Fair", color: "text-yellow-500" };
+    return { text: "Strong", color: "text-green-500" };
+  };
+
+  const passwordStrengthInfo = getPasswordStrengthText();
   return (
     <Card className="mx-auto max-w-sm w-full lg:w-1/3 mb-6">
       <CardHeader className="space-y-1 flex flex-col justify-center items-center px-6 pt-6 pb-4">
@@ -91,10 +105,15 @@ export function CardsCreateAccount() {
               <EyeIcon className="w-5" />
             )}
           </button>
-          <Progress value={passwordStrength} className="mt-2" />
-          {passwordStrength < 100 && (
-            <p className="text-xs text-red-500">Password is weak</p>
-          )}
+          <div className="w-full mt-2 rounded-full h-2 bg-zinc-100 dark:bg-zinc-800">
+            <div
+              className={`${getProgressBarColor()} h-2 rounded-full`}
+              style={{ width: `${passwordStrength}%` }}
+            ></div>
+          </div>
+          <p className={`text-xs mt-1 ${passwordStrengthInfo.color}`}>
+            {password && passwordStrengthInfo.text}
+          </p>
         </div>
         <div className="grid gap-2 relative">
           <Label htmlFor="confirmPassword">Confirm Password</Label>
