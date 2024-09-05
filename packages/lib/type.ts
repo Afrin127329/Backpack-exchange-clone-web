@@ -12,5 +12,5 @@ export interface DetailedCryptoData {
   marketCap: string;
   volume: string;
   change24h: string;
-  changeType: "positive" | "negative";
+  changeType: string;
 }
