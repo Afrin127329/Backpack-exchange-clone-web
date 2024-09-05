@@ -31,6 +31,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/packages/components/ui/table";
+import Link from "next/link";
 import { detailedCryptoData as data } from "../lib/data";
 import { DetailedCryptoData } from "../lib/type";
 
@@ -116,7 +117,6 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
           className="cursor-pointer dark:hover:text-zinc-400 hover:text-zinc-600 flex items-center gap-2"
         >
           <span>Price</span>
-
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </div>
       );
@@ -231,7 +231,10 @@ export function CryptoDataTable() {
 
   return (
     <div className="w-full">
-      <div className="flex items-center py-4">
+      <div className="flex items-center py-4 justify-evenly">
+        <div className="text-xl mr-4 font-bold bg-blue-600/[16%] text-blueText p-2 rounded-lg">
+          Spot
+        </div>
         <Input
           placeholder="Search..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -296,14 +299,16 @@ export function CryptoDataTable() {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className="border border-zinc-200 dark:border-zinc-800"
+                  className="border border-zinc-200 dark:border-zinc-800 cursor-pointer"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
+                      <Link href={`/trade/${row.original.name}`}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </Link>
                     </TableCell>
                   ))}
                 </TableRow>
