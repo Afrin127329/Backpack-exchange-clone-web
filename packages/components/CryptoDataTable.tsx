@@ -235,7 +235,7 @@ export function CryptoDataTable() {
 
   return (
     <div className="w-full">
-      <div className="flex items-center py-4 justify-evenly">
+      <div className="flex items-center py-4 justify-evenly gap-2">
         <div className="text-xl mr-4 font-bold bg-blue-600/[16%] text-blueText p-2 rounded-lg">
           Spot
         </div>
