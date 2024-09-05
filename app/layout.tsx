@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-sync-scripts */
 import Navbar from "@/packages/components/Navbar";
-import { ThemeProvider } from "@/packages/components/themeProvider";
+import { ThemeProvider } from "@/packages/lib/themeProvider";
 import "@/packages/styles/globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
