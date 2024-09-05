@@ -276,7 +276,7 @@ export function CryptoDataTable() {
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
                 key={headerGroup.id}
-                className="border border-zinc-200 dark:border-zinc-800"
+                className="border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-baseBackgroundL1"
               >
                 {headerGroup.headers.map((header) => {
                   return (
