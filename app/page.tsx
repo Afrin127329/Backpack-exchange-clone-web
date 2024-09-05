@@ -1,5 +1,6 @@
 "use client";
 
+import { CryptoDataTable } from "@/packages/components/CryptoDataTable";
 import Hero from "@/packages/components/Hero";
 import Markets from "@/packages/components/Markets";
 import { cryptoData } from "@/packages/lib/data";
@@ -14,6 +15,9 @@ export default function Home() {
         <Markets marketData={marketData} />
         <Markets marketData={marketData} />
         <Markets marketData={marketData} />
+      </div>
+      <div className="w-11/12 flex flex-col lg:flex-row gap-4 my-6 justify-between items-center">
+        <CryptoDataTable />
       </div>
     </main>
   );

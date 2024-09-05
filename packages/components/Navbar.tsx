@@ -2,7 +2,7 @@
 import { Input } from "@/packages/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
-import { SelectDemo } from "./Select";
+import { NavDropDown } from "./NavDropDown";
 import { ModeToggle } from "./themeToggleButton";
 import { Button } from "./ui/button";
 
@@ -151,7 +151,7 @@ const Navbar = () => {
               </a>
             </li>
             <li>
-              <SelectDemo />
+              <NavDropDown />
             </li>
           </ul>
           <div className="flex justify-between gap-2 order-last md:hidden">
