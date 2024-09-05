@@ -39,7 +39,7 @@ export default function RootLayout({
           <Suspense fallback={<Loading />}>{children}</Suspense>
 
           {/* Footer */}
-          <footer className="rounded-lg shadow m-4 text-xs">
+          <footer className="m-4 text-xs">
             <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-center gap-4">
               <span className=" sm:text-center font-bold">
                 © 2024{" "}
