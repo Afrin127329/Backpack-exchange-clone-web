@@ -101,12 +101,16 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
   {
     accessorKey: "name",
     header: "Name",
-    cell: ({ row }) => (
-      <div className=" flex flex-col gap-2">
-        <span className="capitalize text-[16px]">{row.getValue("name")}</span>
-        <span className="text-xs text-gray-600">{row.getValue("symbol")}</span>
-      </div>
-    ),
+    cell: ({ row }) => {
+      const name = row.original.name;
+      const symbol = row.original.symbol;
+      return (
+        <div className=" flex flex-col gap-2">
+          <span className="capitalize text-[16px]">{name}</span>
+          <span className="text-xs text-gray-600">{symbol}</span>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "price",
@@ -299,7 +303,7 @@ export function CryptoDataTable() {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className="border border-zinc-200 dark:border-zinc-800 cursor-pointer"
+                  className="border border-zinc-200 dark:border-zinc-800 cursor-pointer hover:bg-gray-50 dark:hover:bg-baseBackgroundL1"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -328,8 +332,8 @@ export function CryptoDataTable() {
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
+          Showing {table.getRowCount()} of{" "}
+          {table.getFilteredRowModel().rows.length} row(s).
         </div>
         <div className="space-x-2">
           <Button
