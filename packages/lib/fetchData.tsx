@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-const useCoinData = (coinId: string, interval = 60000) => {
+const useCoinData = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
