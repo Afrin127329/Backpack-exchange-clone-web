@@ -6,6 +6,8 @@ import Markets from "@/packages/components/Markets";
 import { cryptoData } from "@/packages/lib/data";
 import useCoinData from "@/packages/lib/fetchData";
 import { CryptoData } from "@/packages/lib/type";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 export default function Home() {
   const marketData: CryptoData[] = cryptoData;
@@ -21,7 +23,9 @@ export default function Home() {
         <Markets marketData={marketData} />
       </div>
       <div className="w-11/12 flex flex-col lg:flex-row gap-4 my-6 justify-between items-center">
-        <CryptoDataTable data={data} />
+        <Suspense fallback={<Loading />}>
+          <CryptoDataTable data={data} />
+        </Suspense>
       </div>
     </main>
   );
