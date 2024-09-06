@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
+import { DetailedCryptoData } from "./type";
 
 const useCoinData = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<DetailedCryptoData | null>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 

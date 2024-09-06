@@ -1,6 +1,6 @@
-import { CryptoData, DetailedCryptoData } from "./type";
+import { CryptoData } from "./type";
 
-export const detailedCryptoData: DetailedCryptoData[] = [
+export const detailedCryptoData = [
   {
     name: "Bitcoin",
     symbol: "BTC",
