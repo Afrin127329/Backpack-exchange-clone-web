@@ -9,8 +9,9 @@ import { CryptoData } from "@/packages/lib/type";
 
 export default function Home() {
   const marketData: CryptoData[] = cryptoData;
-  const cryptoCointdata = useCoinData();
-  console.log(cryptoCointdata);
+  const { data, loading, error } = useCoinData();
+  console.log(data);
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-2">
       <Hero />
@@ -20,7 +21,7 @@ export default function Home() {
         <Markets marketData={marketData} />
       </div>
       <div className="w-11/12 flex flex-col lg:flex-row gap-4 my-6 justify-between items-center">
-        <CryptoDataTable />
+        <CryptoDataTable data={data} />
       </div>
     </main>
   );
