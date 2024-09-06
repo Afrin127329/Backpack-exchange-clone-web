@@ -9,7 +9,7 @@ import { Button } from "./ui/button";
 const Navbar = () => {
   return (
     <nav className="bg-transparent w-full">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 gap-4 md:gap-0">
         <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
           <Image
             width={32}
@@ -18,7 +18,7 @@ const Navbar = () => {
             className="h-8 rounded-full"
             alt="Backpack exchange clone"
           />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+          <span className="self-center hidden md:block text-2xl font-semibold whitespace-nowrap dark:text-white">
             Backpack Exchange
           </span>
         </a>
