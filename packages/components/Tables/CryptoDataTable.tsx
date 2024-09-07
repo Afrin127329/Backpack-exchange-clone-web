@@ -84,8 +84,12 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
 
       return (
         <div className=" flex flex-col gap-2">
-          <span className="capitalize text-[16px]">{name}</span>
-          <span className="text-xs text-gray-600">{symbol}</span>
+          <span className="text-base dark:text-baseTextHighEmphasis font-bold whitespace-nowrap">
+            {name}
+          </span>
+          <span className="text-xs uppercase flex-medium text-left leading-5 text-baseTextMedEmphasis">
+            {symbol}
+          </span>
         </div>
       );
     },
@@ -106,7 +110,6 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("current_price"));
 
-      // Format the amount as a dollar amount
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
