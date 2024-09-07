@@ -17,9 +17,15 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-2">
       <Hero />
       <div className="w-11/12 flex flex-col lg:flex-row gap-4 my-6 justify-between items-center">
-        <Markets marketData={marketData} />
-        <Markets marketData={marketData} />
-        <Markets marketData={marketData} />
+        <Suspense fallback={<Loading />}>
+          {data && (
+            <>
+              <Markets marketData={data} />
+              <Markets marketData={data} />
+              <Markets marketData={data} />
+            </>
+          )}
+        </Suspense>
       </div>
       <div className="w-11/12 flex flex-col lg:flex-row gap-4 my-6 justify-between items-center">
         <Suspense fallback={<Loading />}>
