@@ -31,6 +31,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/packages/components/ui/table";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import Image from "next/image";
 import Link from "next/link";
 import { DetailedCryptoData } from "../../lib/type";
 
@@ -81,15 +83,21 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
     cell: ({ row }) => {
       const name = row.original.name;
       const symbol = row.original.symbol;
+      const image = row.original.image as string | StaticImport;
 
       return (
-        <div className=" flex flex-col gap-2">
-          <span className="text-base dark:text-baseTextHighEmphasis font-bold whitespace-nowrap">
-            {name}
-          </span>
-          <span className="text-xs uppercase flex-medium text-left leading-5 text-baseTextMedEmphasis">
-            {symbol}
-          </span>
+        <div className=" flex items-center gap-4">
+          <div className="relative flex-none overflow-hidden rounded-full border border-zinc-200 dark:border-zinc-800 w-[40px] h-[40px]">
+            <Image src={image} width={40} height={40} alt={`${name} logo`} />
+          </div>
+          <div className="flex flex-col gap-2">
+            <span className="text-base dark:text-baseTextHighEmphasis font-bold whitespace-nowrap">
+              {name}
+            </span>
+            <span className="text-xs uppercase flex-medium text-left leading-5 text-baseTextMedEmphasis">
+              {symbol}
+            </span>
+          </div>
         </div>
       );
     },
