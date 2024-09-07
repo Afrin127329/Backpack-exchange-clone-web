@@ -35,6 +35,7 @@ import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 import Link from "next/link";
 import { DetailedCryptoData } from "../../lib/type";
+import CryptoPriceChart from "../PriceSvg";
 
 // const data: Payment[] = [
 //   {
@@ -103,7 +104,7 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
     },
   },
   {
-    accessorKey: "current_price",
+    accessorKey: "Current Price",
     header: ({ column }) => {
       return (
         <div
@@ -116,20 +117,17 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
       );
     },
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("current_price"));
-
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount);
-      return <div className="lowercase">{formatted}</div>;
+      const price = row.original.current_price;
+      return <div className="lowercase text-base">${price}</div>;
     },
   },
   {
-    accessorKey: "market_cap",
+    accessorKey: "Market Cap",
     header: "Market Cap",
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("market_cap"));
+      let marketCap: any = row.original.market_cap;
+      const amount = parseFloat(marketCap);
+
       const formatNumber = (num: number) => {
         let formattedNumber;
 
@@ -151,45 +149,57 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
       };
       const formatted = formatNumber(amount);
 
-      return <div className="font-medium">{formatted}</div>;
+      return <div className="font-medium text-base">{formatted}</div>;
     },
   },
   {
-    accessorKey: "total_volume",
+    accessorKey: "24 Volume",
     header: "24h Volume",
     cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue("total_volume")}</div>;
+      // @ts-ignore
+      const totalVolume = parseFloat(row.original.total_volume);
+      const formatVolume = (volume: number) => {
+        if (volume >= 1e9) {
+          return (volume / 1e9).toFixed(1) + "B";
+        } else if (volume >= 1e6) {
+          return (volume / 1e6).toFixed(1) + "M";
+        } else if (volume >= 1e3) {
+          return (volume / 1e3).toFixed(1) + "K";
+        }
+        return volume;
+      };
+
+      const formattedVolume = formatVolume(totalVolume);
+      return <div className="font-medium text-base">${formattedVolume}</div>;
     },
   },
   {
-    accessorKey: "market_cap_change_24h",
+    accessorKey: "Change in 24h",
     header: "24h Change",
     cell: ({ row }) => {
-      const change24h = row.original.market_cap_change_24h;
-      // const changeType = row.original.changeType;
+      const change24h = row.original.price_change_percentage_24h;
+      const textColor = change24h < 0 ? "text-redText" : "text-greenText";
+      const formattedChange =
+        change24h > 0 ? `+${change24h.toFixed(2)}` : change24h.toFixed(2);
 
       return (
         <div>
-          <div className={`font-medium text-greenText`}>{change24h}</div>
-          {/* {change24h === "positive" ? (
-          ) : (
-            <div className={`font-medium text-redText`}>{change24h}</div>
-          )} */}
+          <div className={`font-medium ${textColor} text-base`}>
+            {formattedChange}%
+          </div>
         </div>
       );
     },
   },
   {
-    accessorKey: "price_change_percentage_24h",
+    accessorKey: "Last 7 days",
     header: "Last 7 days",
     cell: ({ row }) => {
-      /**
-       * @todo
-       * this one should be an svg
-       *  */
+      const priceChange = row.original.price_change_percentage_24h;
+
       return (
-        <div className="font-medium">
-          {row.getValue("price_change_percentage_24h")}
+        <div className="font-medium text-base">
+          <CryptoPriceChart cryptoData={priceChange} />
         </div>
       );
     },
@@ -279,6 +289,7 @@ export function CryptoDataTable({ data }) {
               .getAllColumns()
               .filter((column) => column.getCanHide())
               .map((column) => {
+                const header: any = column.columnDef.header;
                 return (
                   <DropdownMenuCheckboxItem
                     key={column.id}
@@ -288,7 +299,7 @@ export function CryptoDataTable({ data }) {
                       column.toggleVisibility(!!value)
                     }
                   >
-                    {column.id}
+                    {header}
                   </DropdownMenuCheckboxItem>
                 );
               })}
