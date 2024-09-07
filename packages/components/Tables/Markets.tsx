@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { DetailedCryptoData } from "../lib/type";
+import { DetailedCryptoData } from "../../lib/type";
 
 interface MarketsProps {
   marketData: DetailedCryptoData[] | any;

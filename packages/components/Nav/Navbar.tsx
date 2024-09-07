@@ -2,9 +2,9 @@
 import { Input } from "@/packages/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
+import { ModeToggle } from "../Buttons/themeToggleButton";
+import { Button } from "../ui/button";
 import { NavDropDown } from "./NavDropDown";
-import { ModeToggle } from "./themeToggleButton";
-import { Button } from "./ui/button";
 
 const Navbar = () => {
   return (

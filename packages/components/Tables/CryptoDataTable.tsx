@@ -32,7 +32,7 @@ import {
   TableRow,
 } from "@/packages/components/ui/table";
 import Link from "next/link";
-import { DetailedCryptoData } from "../lib/type";
+import { DetailedCryptoData } from "../../lib/type";
 
 // const data: Payment[] = [
 //   {

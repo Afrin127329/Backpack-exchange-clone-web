@@ -1,8 +1,8 @@
 "use client";
 
-import { CryptoDataTable } from "@/packages/components/CryptoDataTable";
 import Hero from "@/packages/components/Hero";
-import Markets from "@/packages/components/Markets";
+import { CryptoDataTable } from "@/packages/components/Tables/CryptoDataTable";
+import Markets from "@/packages/components/Tables/Markets";
 import { cryptoData } from "@/packages/lib/data";
 import useCoinData from "@/packages/lib/fetchData";
 import { CryptoData } from "@/packages/lib/type";
