@@ -81,6 +81,7 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
     cell: ({ row }) => {
       const name = row.original.name;
       const symbol = row.original.symbol;
+
       return (
         <div className=" flex flex-col gap-2">
           <span className="capitalize text-[16px]">{name}</span>
@@ -110,7 +111,7 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
         style: "currency",
         currency: "USD",
       }).format(amount);
-      return <div className="lowercase">${formatted}</div>;
+      return <div className="lowercase">{formatted}</div>;
     },
   },
   {
@@ -118,23 +119,25 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
     header: "Market Cap",
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("market_cap"));
-
       const formatNumber = (num: number) => {
-        if (num >= 1e12) {
-          return (num / 1e12).toFixed(2) + "T"; // Trillions
-        } else if (num >= 1e9) {
-          return (num / 1e9).toFixed(2) + "B"; // Billions
-        } else if (num >= 1e6) {
-          return (num / 1e6).toFixed(2) + "M"; // Millions
-        }
-        const formattedNumber = new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-        }).format(num);
-        return formattedNumber;
-      };
+        let formattedNumber;
 
-      // Apply formatting
+        if (num >= 1e12) {
+          formattedNumber = (num / 1e12).toFixed(2) + "T";
+        } else if (num >= 1e9) {
+          formattedNumber = (num / 1e9).toFixed(2) + "B";
+        } else if (num >= 1e6) {
+          formattedNumber = (num / 1e6).toFixed(2) + "M";
+        } else {
+          formattedNumber = new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+          }).format(num);
+          return formattedNumber;
+        }
+
+        return "$" + formattedNumber;
+      };
       const formatted = formatNumber(amount);
 
       return <div className="font-medium">{formatted}</div>;

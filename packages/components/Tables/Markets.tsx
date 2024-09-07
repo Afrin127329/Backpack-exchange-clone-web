@@ -10,7 +10,7 @@ const Markets: React.FC<MarketsProps> = ({ marketData }) => {
       <h1 className="dark:text-baseTextHighEmphasis pt-4 pl-4">Markets</h1>
       <div className="relative overflow-x-auto mt-3">
         <ul className="w-full !text-sm text-left rtl:text-right border dark:border-zinc-800 text-gray-500 dark:text-gray-400">
-          {marketData.map((market: any) => (
+          {marketData.slice(0, 5).map((market: any) => (
             <li
               className="bg-white dark:bg-zinc-950 hover:bg-gray-50 dark:hover:bg-baseBackgroundL1 cursor-pointer"
               key={market.id}
