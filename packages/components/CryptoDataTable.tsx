@@ -32,7 +32,6 @@ import {
   TableRow,
 } from "@/packages/components/ui/table";
 import Link from "next/link";
-import { detailedCryptoData as data } from "../lib/data";
 import { DetailedCryptoData } from "../lib/type";
 
 // const data: Payment[] = [
@@ -125,44 +124,46 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
         </div>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("price")}</div>,
+    cell: ({ row }) => (
+      <div className="lowercase">{row.getValue("current_price")}</div>
+    ),
   },
   {
     accessorKey: "marketCap",
     header: "Market Cap",
     cell: ({ row }) => {
-      // const amount = parseFloat(row.getValue("marketCap"));
+      const amount = parseFloat(row.getValue("market_cap"));
 
-      // // Format the amount as a dollar amount
-      // const formatted = new Intl.NumberFormat("en-US", {
-      //   style: "currency",
-      //   currency: "USD",
-      // }).format(amount);
+      // Format the amount as a dollar amount
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(amount);
 
-      return <div className="font-medium">{row.getValue("marketCap")}</div>;
+      return <div className="font-medium">{formatted}</div>;
     },
   },
   {
     accessorKey: "volume",
     header: "24h Volume",
     cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue("volume")}</div>;
+      return <div className="font-medium">{row.getValue("total_volume")}</div>;
     },
   },
   {
     accessorKey: "change24h",
     header: "24h Change",
     cell: ({ row }) => {
-      const change24h = row.original.change24h;
-      const changeType = row.original.changeType;
+      const change24h = row.original.market_cap_change_24h;
+      // const changeType = row.original.changeType;
 
       return (
         <div>
-          {changeType === "positive" ? (
-            <div className={`font-medium text-greenText`}>{change24h}</div>
+          <div className={`font-medium text-greenText`}>{change24h}</div>
+          {/* {change24h === "positive" ? (
           ) : (
             <div className={`font-medium text-redText`}>{change24h}</div>
-          )}
+          )} */}
         </div>
       );
     },
@@ -172,9 +173,14 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
     accessorKey: "last7days",
     header: "Last 7 days",
     cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue("change24h")}</div>;
+      return (
+        <div className="font-medium">
+          {row.getValue("price_change_percentage_24h")}
+        </div>
+      );
     },
   },
+
   // {
   //   id: "actions",
   //   enableHiding: false,
@@ -206,7 +212,8 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
   // },
 ];
 
-export function CryptoDataTable() {
+// @ts-ignore
+export function CryptoDataTable({ data }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
