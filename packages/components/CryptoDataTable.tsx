@@ -75,28 +75,6 @@ import { DetailedCryptoData } from "../lib/type";
 // };
 
 export const columns: ColumnDef<DetailedCryptoData>[] = [
-  // {
-  //   id: "select",
-  //   header: ({ table }) => (
-  //     <Checkbox
-  //       checked={
-  //         table.getIsAllPageRowsSelected() ||
-  //         (table.getIsSomePageRowsSelected() && "indeterminate")
-  //       }
-  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-  //       aria-label="Select all"
-  //     />
-  //   ),
-  //   cell: ({ row }) => (
-  //     <Checkbox
-  //       checked={row.getIsSelected()}
-  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
-  //       aria-label="Select row"
-  //     />
-  //   ),
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
   {
     accessorKey: "name",
     header: "Name",
@@ -112,7 +90,7 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
     },
   },
   {
-    accessorKey: "price",
+    accessorKey: "current_price",
     header: ({ column }) => {
       return (
         <div
@@ -124,12 +102,19 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
         </div>
       );
     },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("current_price")}</div>
-    ),
+    cell: ({ row }) => {
+      const amount = parseFloat(row.getValue("current_price"));
+
+      // Format the amount as a dollar amount
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(amount);
+      return <div className="lowercase">{formatted}</div>;
+    },
   },
   {
-    accessorKey: "marketCap",
+    accessorKey: "market_cap",
     header: "Market Cap",
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("market_cap"));
@@ -144,14 +129,14 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
     },
   },
   {
-    accessorKey: "volume",
+    accessorKey: "total_volume",
     header: "24h Volume",
     cell: ({ row }) => {
       return <div className="font-medium">{row.getValue("total_volume")}</div>;
     },
   },
   {
-    accessorKey: "change24h",
+    accessorKey: "market_cap_change_24h",
     header: "24h Change",
     cell: ({ row }) => {
       const change24h = row.original.market_cap_change_24h;
@@ -168,11 +153,14 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
       );
     },
   },
-
   {
-    accessorKey: "last7days",
+    accessorKey: "price_change_percentage_24h",
     header: "Last 7 days",
     cell: ({ row }) => {
+      /**
+       * @todo
+       * this one should be an svg
+       *  */
       return (
         <div className="font-medium">
           {row.getValue("price_change_percentage_24h")}
