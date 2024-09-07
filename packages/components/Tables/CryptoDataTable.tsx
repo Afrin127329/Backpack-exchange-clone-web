@@ -31,8 +31,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/packages/components/ui/table";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import Image from "next/image";
 import Link from "next/link";
-import { DetailedCryptoData } from "../lib/type";
+import { DetailedCryptoData } from "../../lib/type";
+import CryptoPriceChart from "../PriceSvg";
 
 // const data: Payment[] = [
 //   {
@@ -75,44 +78,33 @@ import { DetailedCryptoData } from "../lib/type";
 // };
 
 export const columns: ColumnDef<DetailedCryptoData>[] = [
-  // {
-  //   id: "select",
-  //   header: ({ table }) => (
-  //     <Checkbox
-  //       checked={
-  //         table.getIsAllPageRowsSelected() ||
-  //         (table.getIsSomePageRowsSelected() && "indeterminate")
-  //       }
-  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-  //       aria-label="Select all"
-  //     />
-  //   ),
-  //   cell: ({ row }) => (
-  //     <Checkbox
-  //       checked={row.getIsSelected()}
-  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
-  //       aria-label="Select row"
-  //     />
-  //   ),
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
   {
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => {
       const name = row.original.name;
       const symbol = row.original.symbol;
+      const image = row.original.image as string | StaticImport;
+
       return (
-        <div className=" flex flex-col gap-2">
-          <span className="capitalize text-[16px]">{name}</span>
-          <span className="text-xs text-gray-600">{symbol}</span>
+        <div className=" flex items-center gap-4">
+          <div className="relative flex-none overflow-hidden rounded-full border border-zinc-200 dark:border-zinc-800 w-[40px] h-[40px]">
+            <Image src={image} width={40} height={40} alt={`${name} logo`} />
+          </div>
+          <div className="flex flex-col gap-2">
+            <span className="text-base dark:text-baseTextHighEmphasis font-bold whitespace-nowrap">
+              {name}
+            </span>
+            <span className="text-xs uppercase flex-medium text-left leading-5 text-baseTextMedEmphasis">
+              {symbol}
+            </span>
+          </div>
         </div>
       );
     },
   },
   {
-    accessorKey: "price",
+    accessorKey: "Current Price",
     header: ({ column }) => {
       return (
         <div
@@ -124,58 +116,90 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
         </div>
       );
     },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("current_price")}</div>
-    ),
+    cell: ({ row }) => {
+      const price = row.original.current_price;
+      return <div className="lowercase text-base">${price}</div>;
+    },
   },
   {
-    accessorKey: "marketCap",
+    accessorKey: "Market Cap",
     header: "Market Cap",
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("market_cap"));
+      let marketCap: any = row.original.market_cap;
+      const amount = parseFloat(marketCap);
 
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount);
+      const formatNumber = (num: number) => {
+        let formattedNumber;
 
-      return <div className="font-medium">{formatted}</div>;
+        if (num >= 1e12) {
+          formattedNumber = (num / 1e12).toFixed(2) + "T";
+        } else if (num >= 1e9) {
+          formattedNumber = (num / 1e9).toFixed(2) + "B";
+        } else if (num >= 1e6) {
+          formattedNumber = (num / 1e6).toFixed(2) + "M";
+        } else {
+          formattedNumber = new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+          }).format(num);
+          return formattedNumber;
+        }
+
+        return "$" + formattedNumber;
+      };
+      const formatted = formatNumber(amount);
+
+      return <div className="font-medium text-base">{formatted}</div>;
     },
   },
   {
-    accessorKey: "volume",
+    accessorKey: "24 Volume",
     header: "24h Volume",
     cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue("total_volume")}</div>;
+      // @ts-ignore
+      const totalVolume = parseFloat(row.original.total_volume);
+      const formatVolume = (volume: number) => {
+        if (volume >= 1e9) {
+          return (volume / 1e9).toFixed(1) + "B";
+        } else if (volume >= 1e6) {
+          return (volume / 1e6).toFixed(1) + "M";
+        } else if (volume >= 1e3) {
+          return (volume / 1e3).toFixed(1) + "K";
+        }
+        return volume;
+      };
+
+      const formattedVolume = formatVolume(totalVolume);
+      return <div className="font-medium text-base">${formattedVolume}</div>;
     },
   },
   {
-    accessorKey: "change24h",
+    accessorKey: "Change in 24h",
     header: "24h Change",
     cell: ({ row }) => {
-      const change24h = row.original.market_cap_change_24h;
-      // const changeType = row.original.changeType;
+      const change24h = row.original.price_change_percentage_24h;
+      const textColor = change24h < 0 ? "text-redText" : "text-greenText";
+      const formattedChange =
+        change24h > 0 ? `+${change24h.toFixed(2)}` : change24h.toFixed(2);
 
       return (
         <div>
-          <div className={`font-medium text-greenText`}>{change24h}</div>
-          {/* {change24h === "positive" ? (
-          ) : (
-            <div className={`font-medium text-redText`}>{change24h}</div>
-          )} */}
+          <div className={`font-medium ${textColor} text-base`}>
+            {formattedChange}%
+          </div>
         </div>
       );
     },
   },
-
   {
-    accessorKey: "last7days",
+    accessorKey: "Last 7 days",
     header: "Last 7 days",
     cell: ({ row }) => {
+      const priceChange = row.original.price_change_percentage_24h;
+
       return (
-        <div className="font-medium">
-          {row.getValue("price_change_percentage_24h")}
+        <div className="font-medium text-base">
+          <CryptoPriceChart cryptoData={priceChange} />
         </div>
       );
     },
@@ -265,6 +289,7 @@ export function CryptoDataTable({ data }) {
               .getAllColumns()
               .filter((column) => column.getCanHide())
               .map((column) => {
+                const header: any = column.columnDef.header;
                 return (
                   <DropdownMenuCheckboxItem
                     key={column.id}
@@ -274,7 +299,7 @@ export function CryptoDataTable({ data }) {
                       column.toggleVisibility(!!value)
                     }
                   >
-                    {column.id}
+                    {header}
                   </DropdownMenuCheckboxItem>
                 );
               })}

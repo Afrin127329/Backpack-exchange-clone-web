@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-sync-scripts */
-import Navbar from "@/packages/components/Navbar";
+import Navbar from "@/packages/components/Nav/Navbar";
 import { ThemeProvider } from "@/packages/lib/themeProvider";
 import "@/packages/styles/globals.css";
 import type { Metadata } from "next";
