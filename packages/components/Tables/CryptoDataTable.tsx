@@ -104,7 +104,7 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
     },
   },
   {
-    accessorKey: "Current Price",
+    accessorKey: "current_price",
     header: ({ column }) => {
       return (
         <div
@@ -289,7 +289,6 @@ export function CryptoDataTable({ data }) {
               .getAllColumns()
               .filter((column) => column.getCanHide())
               .map((column) => {
-                const header: any = column.columnDef.header;
                 return (
                   <DropdownMenuCheckboxItem
                     key={column.id}
@@ -299,7 +298,7 @@ export function CryptoDataTable({ data }) {
                       column.toggleVisibility(!!value)
                     }
                   >
-                    {header}
+                    {column.id === "current_price" ? "price" : column.id}
                   </DropdownMenuCheckboxItem>
                 );
               })}
