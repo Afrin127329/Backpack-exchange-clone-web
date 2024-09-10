@@ -36,7 +36,7 @@ const useHistoricalData = (coinId: string, days = 7) => {
 
 // Create a new component to use the hook
 export const HistoricalPriceChart = ({ coinId }: { coinId: string }) => {
-  const { data, loading, error } = useHistoricalData(coinId, 7); // Fetch 7 days of data
+  const { data, loading, error } = useHistoricalData(coinId, 7);
 
   if (loading)
     return (

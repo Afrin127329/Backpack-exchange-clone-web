@@ -199,7 +199,6 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
 
       return (
         <div className="font-medium text-base">
-          {/* <CryptoPriceChart cryptoData={coinId} /> */}
           {coinId && <HistoricalPriceChart coinId={coinId} />}
         </div>
       );

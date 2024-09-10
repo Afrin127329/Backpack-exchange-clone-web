@@ -6,13 +6,12 @@ import Markets from "@/packages/components/Tables/Markets";
 import { cryptoData } from "@/packages/lib/data";
 import useCoinData from "@/packages/lib/fetchData";
 import { CryptoData } from "@/packages/lib/type";
-import { HistoricalPriceChart } from "@/packages/lib/useHistoricalData";
 import { Suspense } from "react";
 import Loading from "./loading";
 
 export default function Home() {
   const marketData: CryptoData[] = cryptoData;
-  const { data } = useCoinData();
+  const { data, loading } = useCoinData();
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-2">
@@ -29,9 +28,7 @@ export default function Home() {
         </Suspense>
       </div>
       <div className="w-11/12 flex flex-col lg:flex-row gap-4 my-6 justify-between items-center">
-        <Suspense fallback={<Loading />}>
-          {data && <CryptoDataTable data={data} />}
-        </Suspense>
+        {loading ? <Loading /> : <CryptoDataTable data={data} />}
       </div>
     </main>
   );
