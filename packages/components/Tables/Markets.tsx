@@ -3,12 +3,13 @@ import { DetailedCryptoData } from "../../lib/type";
 
 interface MarketsProps {
   marketData: DetailedCryptoData[] | any;
+  title: string;
 }
-const Markets: React.FC<MarketsProps> = ({ marketData }) => {
+const Markets: React.FC<MarketsProps> = ({ marketData, title }) => {
   console.log(marketData);
   return (
     <div className="w-full lg:w-1/3 bg-white dark:bg-baseBackgroundL1 rounded-t-md shadow-md overflow-y-hidden">
-      <h1 className="dark:text-baseTextHighEmphasis pt-4 pl-4">Markets</h1>
+      <h1 className="dark:text-baseTextHighEmphasis pt-4 pl-4">{title}</h1>
       <div className="relative overflow-x-auto mt-3">
         <ul className="w-full !text-sm text-left rtl:text-right border dark:border-zinc-800 text-gray-500 dark:text-gray-400">
           {marketData?.slice(0, 5).map((market: any) => (
@@ -21,20 +22,22 @@ const Markets: React.FC<MarketsProps> = ({ marketData }) => {
                 className="flex items-center justify-between"
               >
                 <span className="w-[40%] flex flex-row px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {market.name}
+                  {market.name}/USDC
                 </span>
                 <div className="w-[30%] flex flex-row justify-end px-6 py-4">
-                  {market.current_price}
+                  ${market.current_price}
                 </div>
-                <div className="w-[30%] flex flex-row justify-end px-6 py-4 text-greenText">
-                  {market.market_cap_change_24h}
+                <div
+                  className={`w-[30%] flex flex-row justify-end px-6 py-4 ${
+                    market.price_change_percentage_24h > 0
+                      ? "text-greenText"
+                      : "text-redText"
+                  }`}
+                >
+                  {market.price_change_percentage_24h > 0
+                    ? `+${market.price_change_percentage_24h.toFixed(2)}%`
+                    : `${market.price_change_percentage_24h.toFixed(2)}%`}
                 </div>
-                {/* {market.changeType === "positive" ? (
-                ) : (
-                  <div className="w-[30%] flex flex-row justify-end px-6 py-4 text-redText">
-                    {market.market_cap_change_24h}
-                  </div>
-                )} */}
               </Link>
             </li>
           ))}
