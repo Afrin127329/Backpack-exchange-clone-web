@@ -31,11 +31,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/packages/components/ui/table";
+import { HistoricalPriceChart } from "@/packages/lib/useHistoricalData";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 import Link from "next/link";
 import { DetailedCryptoData } from "../../lib/type";
-import CryptoPriceChart from "../PriceSvg";
 
 // const data: Payment[] = [
 //   {
@@ -195,11 +195,12 @@ export const columns: ColumnDef<DetailedCryptoData>[] = [
     accessorKey: "Last 7 days",
     header: "Last 7 days",
     cell: ({ row }) => {
-      const priceChange = row.original.price_change_percentage_24h;
+      const coinId = row.original.id;
 
       return (
         <div className="font-medium text-base">
-          <CryptoPriceChart cryptoData={priceChange} />
+          {/* <CryptoPriceChart cryptoData={coinId} /> */}
+          {coinId && <HistoricalPriceChart coinId={coinId} />}
         </div>
       );
     },
