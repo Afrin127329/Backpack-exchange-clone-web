@@ -1,3 +1,4 @@
+import Error from "next/error";
 import { useCallback, useEffect, useState } from "react";
 import { DetailedCryptoData } from "./type";
 
@@ -17,15 +18,25 @@ const useCoinData = () => {
       const res = await fetch(url);
 
       if (!res.ok) {
-        throw new Error(`Error fetching data: ${res.status} ${res.statusText}`);
+        setError("No data returned");
+        // throw new Error(`Error fetching data: ${res.status} ${res.statusText}`);
       }
 
       const result = await res.json();
+      if (res.status >= 400 || result.error) {
+        // throw new Error(
+        //   result.error?.message || `Error: ${res.status} ${res.statusText}`
+        // );
+        setError("Something went wrong!");
+        setLoading(false);
+        return;
+      }
+      console.log(result);
 
       setData(result);
+      localStorage.setItem("coinData", JSON.stringify(result));
       setLoading(false);
-    } catch (err: any) {
-      console.error("Fetch error:", err);
+    } catch (err: Error | any) {
       setError(err.message);
       setLoading(false);
     }

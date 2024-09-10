@@ -17,6 +17,7 @@ export async function GET(request: NextRequest) {
     if (!res.ok) {
       return NextResponse.json({
         error: `Failed to fetch data: ${res.statusText}`,
+        status: res.status,
       });
     }
 

@@ -338,7 +338,9 @@ export function CryptoDataTable({ data }) {
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      <Link href={`/trade/${row.original.name}`}>
+                      <Link
+                        href={`/trade/${row.original.symbol?.toUpperCase()}_USDC`}
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
