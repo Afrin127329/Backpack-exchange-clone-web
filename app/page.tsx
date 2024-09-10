@@ -25,9 +25,9 @@ export default function Home() {
       <div className="w-11/12 flex flex-col lg:flex-row gap-4 my-6 justify-between items-center">
         {coinData ? (
           <>
-            <Markets marketData={coinData} />
-            <Markets marketData={coinData} />
-            <Markets marketData={coinData} />
+            <Markets marketData={coinData} title={"New"} />
+            <Markets marketData={coinData} title={"Top Gainers"} />
+            <Markets marketData={coinData} title={"Popular"} />
           </>
         ) : error ? (
           <div className="text-red-500 text-3xl font-bold text-center w-full">
