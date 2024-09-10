@@ -6,6 +6,7 @@ import Markets from "@/packages/components/Tables/Markets";
 import { cryptoData } from "@/packages/lib/data";
 import useCoinData from "@/packages/lib/fetchData";
 import { CryptoData } from "@/packages/lib/type";
+import { HistoricalPriceChart } from "@/packages/lib/useHistoricalData";
 import { Suspense } from "react";
 import Loading from "./loading";
 

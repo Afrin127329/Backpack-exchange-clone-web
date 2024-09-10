@@ -11,7 +11,7 @@ const useHistoricalData = (coinId: string, days = 7) => {
     try {
       setLoading(true);
 
-      const url = `/api/fetchHistoricalData`;
+      const url = `/api/fetchHistoricalData?coinId=${coinId}&days=${days}`;
       const res = await fetch(url);
 
       if (!res.ok) {
