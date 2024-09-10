@@ -4,31 +4,35 @@ const CryptoPriceChart = ({ cryptoData, width = 100, height = 30 }) => {
     return null;
   }
 
-  const maxPrice = Math.max(...cryptoData);
-  const minPrice = Math.min(...cryptoData);
+  // Extract prices from the CoinGecko data (which is an array of [timestamp, price])
+  // @ts-ignore
+  const prices = cryptoData.map((dataPoint) => dataPoint[1]);
+
+  const maxPrice = Math.max(...prices);
+  const minPrice = Math.min(...prices);
   const priceRange = maxPrice - minPrice;
 
   // Normalize the data to fit within the SVG height
   // @ts-ignore
-
   const normalize = (price) => {
-    return ((price - minPrice) / priceRange) * height;
+    return priceRange === 0
+      ? height / 2
+      : ((price - minPrice) / priceRange) * height;
   };
 
   // Create the SVG path using the normalized data
-
-  const pathData = cryptoData
+  const pathData = prices
     // @ts-ignore
     .map((price, index) => {
-      const x = (index / (cryptoData.length - 1)) * width;
+      const x = (index / (prices.length - 1)) * width;
       const y = height - normalize(price); // Invert the Y-axis (higher prices should go up)
       return `${x},${y}`;
     })
     .join(" L ");
 
   // Determine stroke color based on the last price point's trend
-  const lastPrice = cryptoData[cryptoData.length - 1];
-  const firstPrice = cryptoData[0];
+  const lastPrice = prices[prices.length - 1];
+  const firstPrice = prices[0];
   const strokeColor = lastPrice >= firstPrice ? "#16c784" : "#ea3943";
 
   return (
