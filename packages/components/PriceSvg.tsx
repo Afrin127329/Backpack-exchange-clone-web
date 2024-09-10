@@ -1,24 +1,43 @@
 // @ts-ignore
 const CryptoPriceChart = ({ cryptoData, width = 100, height = 30 }) => {
-  if (!cryptoData) {
+  if (!cryptoData || cryptoData.length === 0) {
     return null;
   }
+  // @ts-ignore
+  const prices = cryptoData.map((dataPoint) => dataPoint[1]);
 
-  // Use the 24h change percentage to determine the direction of the line
-  const changePercentage = cryptoData.price_change_percentage_24h;
+  const maxPrice = Math.max(...prices);
+  const minPrice = Math.min(...prices);
+  const priceRange = maxPrice - minPrice;
 
-  // Create a simple two-point line based on the 24h change
-  const startY = height / 2;
-  const endY = startY - ((cryptoData / 100) * height) / 2;
+  // @ts-ignore
+  const normalize = (price) => {
+    return priceRange === 0
+      ? height / 2
+      : ((price - minPrice) / priceRange) * height;
+  };
 
-  const pathData = `M 0,${startY} L ${width},${endY}`;
+  const pathData = prices
+    // @ts-ignore
+    .map((price, index) => {
+      const x = (index / (prices.length - 1)) * width;
+      const y = height - normalize(price);
+      return `${x},${y}`;
+    })
+    .join(" L ");
 
-  // Determine stroke color based on price trend
-  const strokeColor = cryptoData >= 0 ? "#16c784" : "#ea3943";
+  const lastPrice = prices[prices.length - 1];
+  const firstPrice = prices[0];
+  const strokeColor = lastPrice >= firstPrice ? "#16c784" : "#ea3943";
 
   return (
     <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
-      <path d={pathData} fill="none" stroke={strokeColor} strokeWidth="2" />
+      <path
+        d={`M ${pathData}`}
+        fill="none"
+        stroke={strokeColor}
+        strokeWidth="2"
+      />
     </svg>
   );
 };
