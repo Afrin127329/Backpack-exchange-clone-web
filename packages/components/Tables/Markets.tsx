@@ -5,6 +5,7 @@ interface MarketsProps {
   marketData: DetailedCryptoData[] | any;
 }
 const Markets: React.FC<MarketsProps> = ({ marketData }) => {
+  console.log(marketData);
   return (
     <div className="w-full lg:w-1/3 bg-white dark:bg-baseBackgroundL1 rounded-t-md shadow-md overflow-y-hidden">
       <h1 className="dark:text-baseTextHighEmphasis pt-4 pl-4">Markets</h1>
@@ -16,7 +17,7 @@ const Markets: React.FC<MarketsProps> = ({ marketData }) => {
               key={market.id}
             >
               <Link
-                href={`/trade/${market.name}`}
+                href={`/trade/${market?.symbol.toUpperCase()}_USDC`}
                 className="flex items-center justify-between"
               >
                 <span className="w-[40%] flex flex-row px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">

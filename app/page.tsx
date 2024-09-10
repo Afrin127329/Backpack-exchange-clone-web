@@ -4,7 +4,6 @@ import Hero from "@/packages/components/Hero";
 import { CryptoDataTable } from "@/packages/components/Tables/CryptoDataTable";
 import Markets from "@/packages/components/Tables/Markets";
 import useCoinData from "@/packages/lib/fetchData";
-import { Suspense } from "react";
 import Loading from "./loading";
 
 export default function Home() {
@@ -14,19 +13,19 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-2">
       <Hero />
       <div className="w-11/12 flex flex-col lg:flex-row gap-4 my-6 justify-between items-center">
-        <Suspense fallback={<Loading />}>
-          {data ? (
-            <>
-              <Markets marketData={data} />
-              <Markets marketData={data} />
-              <Markets marketData={data} />
-            </>
-          ) : error ? (
-            <div>No data</div>
-          ) : (
-            <Loading />
-          )}
-        </Suspense>
+        {data ? (
+          <>
+            <Markets marketData={data} />
+            <Markets marketData={data} />
+            <Markets marketData={data} />
+          </>
+        ) : error ? (
+          <div className="text-red-500 text-3xl font-bold text-center w-full">
+            <span>No data</span>
+          </div>
+        ) : (
+          <Loading />
+        )}
       </div>
       <div className="w-11/12 flex flex-col lg:flex-row gap-4 my-6 justify-between items-center">
         {data ? (
@@ -34,7 +33,9 @@ export default function Home() {
         ) : loading ? (
           <Loading />
         ) : (
-          <div>No data</div>
+          <div className="text-red-500 text-3xl font-bold text-center w-full">
+            No data
+          </div>
         )}
       </div>
     </main>
