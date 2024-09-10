@@ -18,8 +18,7 @@ const useHistoricalData = (coinId: string, days = 7) => {
         throw new Error(`Error fetching data: ${res.status} ${res.statusText}`);
       }
       const result = await res.json();
-      console.log(result);
-      setData(result.prices); // Prices is an array of [timestamp, price]
+      setData(result.prices);
       setLoading(false);
     } catch (err: any) {
       setError(err);
