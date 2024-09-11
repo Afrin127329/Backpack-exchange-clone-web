@@ -1,5 +1,12 @@
+"use client";
+import TradingViewWidget from "@/packages/components/TradingViewWidget";
+
 function Trade() {
-  return <div>Trading Page</div>;
+  return (
+    <div>
+      <TradingViewWidget />
+    </div>
+  );
 }
 
 export default Trade;
