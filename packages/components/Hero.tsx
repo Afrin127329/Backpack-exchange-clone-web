@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 
 const Hero = () => {
   return (
-    <div className="relative h-full md:h-80 dark:text-white overflow-hidden w-11/12 rounded-lg">
+    <div className="relative h-80 dark:text-white overflow-hidden w-11/12 rounded-lg">
       <div className="absolute inset-0 opacity-70 darK:opacity-30">
         <Image
           src="/heroBg.png"

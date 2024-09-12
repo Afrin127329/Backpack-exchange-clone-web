@@ -4,15 +4,16 @@ import { DetailedCryptoData } from "../../lib/type";
 interface MarketsProps {
   marketData: DetailedCryptoData[] | any;
   title: string;
+  sliceIndex: number;
 }
-const Markets: React.FC<MarketsProps> = ({ marketData, title }) => {
+const Markets: React.FC<MarketsProps> = ({ marketData, title, sliceIndex }) => {
   console.log(marketData);
   return (
     <div className="w-full lg:w-1/3 bg-white dark:bg-baseBackgroundL1 rounded-t-md shadow-md overflow-y-hidden">
       <h1 className="dark:text-baseTextHighEmphasis pt-4 pl-4">{title}</h1>
       <div className="relative overflow-x-auto mt-3">
         <ul className="w-full !text-sm text-left rtl:text-right border dark:border-zinc-800 text-gray-500 dark:text-gray-400">
-          {marketData?.slice(0, 5).map((market: any) => (
+          {marketData?.splice(sliceIndex, 5).map((market: any) => (
             <li
               className="bg-white dark:bg-zinc-950 hover:bg-gray-50 dark:hover:bg-baseBackgroundL1 cursor-pointer"
               key={market.id}
@@ -22,10 +23,10 @@ const Markets: React.FC<MarketsProps> = ({ marketData, title }) => {
                 className="flex items-center justify-between"
               >
                 <span className="w-[40%] flex flex-row px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {market.name}/USDC
+                  {market.name.toUpperCase()}/USDC
                 </span>
                 <div className="w-[30%] flex flex-row justify-end px-6 py-4">
-                  ${market.current_price}
+                  ${market.current_price.toFixed(5)}
                 </div>
                 <div
                   className={`w-[30%] flex flex-row justify-end px-6 py-4 ${
