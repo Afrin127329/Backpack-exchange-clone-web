@@ -42,13 +42,13 @@ export default function RootLayout({
           <footer className="m-4 text-xs">
             <div className="w-full mx-auto max-w-screen-xl p-4 flex flex-col md:flex-row items-center justify-center gap-4">
               <span className=" sm:text-center font-bold">
-                © 2024{" "}
+                Afrin Nahar | 2024 ©{" "}
                 <a
                   href="https://backpack.exchange/"
                   className="hover:opacity-80"
                   target="_blank"
                 >
-                  Backpack Exchange.
+                  Backpack Exchange Clone.
                 </a>
               </span>
               <ul className="flex flex-wrap items-center mt-3 font-medium text-muted-foreground sm:mt-0">

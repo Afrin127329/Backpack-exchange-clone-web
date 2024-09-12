@@ -22,7 +22,7 @@ const Markets: React.FC<MarketsProps> = ({ marketData, title }) => {
                 className="flex items-center justify-between"
               >
                 <span className="w-[40%] flex flex-row px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {market.name}/USDC
+                  {market.name.toUpperCase()}/USDC
                 </span>
                 <div className="w-[30%] flex flex-row justify-end px-6 py-4">
                   ${market.current_price}
