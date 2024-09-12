@@ -12,16 +12,16 @@ function TradingViewWidget() {
       {
         "width": "730",
         "height": "550",
-        "symbol": "BINANCE:BTCUSDC",
-        "interval": "60",
-        "timezone": "Etc/UTC",
-        "theme": "dark",
-        "style": "1",
-        "locale": "en",
-        "hide_side_toolbar": false,
-        "allow_symbol_change": true,
-        "calendar": true,
-        "support_host": "https://www.tradingview.com"
+        "symbol": "COINBASE:BTCUSD",
+          "interval": "60",
+          "timezone": "Etc/UTC",
+          "theme": "dark",
+          "style": "1",
+          "locale": "en",
+          "hide_side_toolbar": false,
+          "allow_symbol_change": false,
+          "calendar": false,
+          "support_host": "https://www.tradingview.com"
       }`;
     const containerElement = container.current;
     if (containerElement) {
@@ -37,7 +37,7 @@ function TradingViewWidget() {
 
   return (
     <div
-      className="tradingview-widget-container"
+      className="tradingview-widget-container min-h-screen"
       ref={container}
       style={{ height: "610px", width: "980px" }}
     >
